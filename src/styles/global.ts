@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
+import '@fontsource/roboto';
 
 const GlobalStyles = createGlobalStyle`
   * {
@@ -16,7 +17,7 @@ const GlobalStyles = createGlobalStyle`
   }
 
   body {
-    font-family: --apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: 'Roboto Mono', monospace;
   }
 
 
