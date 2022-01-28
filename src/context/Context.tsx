@@ -1,17 +1,39 @@
 import React, { createContext, FC, useState } from 'react';
 
-const defaultState = {
-  dark: 'false'
+/* const defaultState = {
+  email: ''
+}; */
+
+//Tipando os dados que quero para usuário
+type UserType = {
+  email: string;
 };
 
-export const CambiosContext = createContext(defaultState);
+//Tipando as Props do contexto
+type PropsUserContext = {
+  state: UserType;
+  setState: React.Dispatch<React.SetStateAction<UserType>>;
+};
+
+//Valor default do contexto
+const DEFAULT_VALUE = {
+  state: {
+    email: ''
+  },
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  setState: () => {} //função de inicialização
+};
+
+//criando nosso contexto UserContext
+export const CambiosContext = createContext<PropsUserContext>(DEFAULT_VALUE);
 
 export const CambiosProvider: FC = ({ children }) => {
-  const [dark, setDark] = useState('false');
+  const [state, setState] = useState(DEFAULT_VALUE.state);
   return (
     <CambiosContext.Provider
       value={{
-        dark
+        state,
+        setState
       }}
     >
       {children}

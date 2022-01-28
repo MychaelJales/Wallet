@@ -10,7 +10,7 @@ function App({ Component, pageProps }: AppProps) {
     <CambiosProvider>
       <ScopedCssBaseline>
         <Head>
-          <title>Boilerplate NextJS</title>
+          <title>MJ Wallet in NextJS</title>
           <meta
             name="description"
             content="A simple project starter to work with TypeScript, Reac, NextJS and Styled Components"

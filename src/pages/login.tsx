@@ -3,12 +3,15 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import TextField from '@mui/material/TextField';
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { CambiosContext } from '../context/Context';
+import { useRouter } from 'next/router';
 
 export default function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [loginData, setLoginData] = useState({ email: '', password: '' });
   const [btnDisabled, setBtnDisabled] = useState(true);
+  const { state, setState } = useContext(CambiosContext);
+  const router = useRouter();
 
   interface MinhaInterface {
     target: {
@@ -16,26 +19,45 @@ export default function Login() {
       value: string;
     };
   }
+  const { email, password } = loginData;
 
   const handleChange = ({ target: { name, value } }: MinhaInterface) => {
+    console.log(value);
     if (name === 'email') {
-      setEmail(value);
+      setLoginData({
+        ...loginData,
+        email: value
+      });
     } else if (name === 'password') {
-      setPassword(value);
+      setLoginData({
+        ...loginData,
+        password: value
+      });
     }
-    LoginButtonAble();
   };
 
   const LoginButtonAble = () => {
-    const MIN_LENGTH_PASSWORD = 5;
+    const MIN_LENGTH_PASSWORD = 6;
     const re = /\S+@\S+\.\S+/;
     if (re.test(email) && password.length >= MIN_LENGTH_PASSWORD) {
       setBtnDisabled(false);
     } else {
       setBtnDisabled(true);
     }
-    console.log({ email, password });
+    console.log(password.length);
   };
+
+  const onClickBtnLogin = () => {
+    setState({
+      ...state,
+      email
+    });
+    router.push('/wallet');
+  };
+
+  useEffect(() => {
+    LoginButtonAble();
+  }, [loginData]);
 
   return (
     <main>
@@ -82,7 +104,7 @@ export default function Login() {
             id="demo-helper-text-misaligned"
             helperText="Please enter your password"
             size="medium"
-            label="Password"
+            label="Paaassword"
             type="password"
             name="password"
             autoComplete="current-password"
@@ -96,6 +118,7 @@ export default function Login() {
           variant="outlined"
           color="primary"
           size="medium"
+          onClick={onClickBtnLogin}
         >
           Fazer Login
         </Button>
