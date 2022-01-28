@@ -22,7 +22,6 @@ export default function Login() {
   const { email, password } = loginData;
 
   const handleChange = ({ target: { name, value } }: MinhaInterface) => {
-    console.log(value);
     if (name === 'email') {
       setLoginData({
         ...loginData,
@@ -44,7 +43,6 @@ export default function Login() {
     } else {
       setBtnDisabled(true);
     }
-    console.log(password.length);
   };
 
   const onClickBtnLogin = () => {
@@ -95,7 +93,6 @@ export default function Login() {
             helperText="Please enter your email"
             label="E-mail"
             /* defaultValue="nome@mail.com" */
-            size="medium"
             value={email}
             name="email"
             onChange={handleChange}
@@ -103,8 +100,7 @@ export default function Login() {
           <TextField
             id="demo-helper-text-misaligned"
             helperText="Please enter your password"
-            size="medium"
-            label="Paaassword"
+            label="Password"
             type="password"
             name="password"
             autoComplete="current-password"

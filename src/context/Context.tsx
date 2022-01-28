@@ -7,6 +7,7 @@ import React, { createContext, FC, useState } from 'react';
 //Tipando os dados que quero para usuário
 type UserType = {
   email: string;
+  currencies: Array<string>;
 };
 
 //Tipando as Props do contexto
@@ -18,7 +19,8 @@ type PropsUserContext = {
 //Valor default do contexto
 const DEFAULT_VALUE = {
   state: {
-    email: ''
+    email: '',
+    currencies: ['']
   },
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   setState: () => {} //função de inicialização
