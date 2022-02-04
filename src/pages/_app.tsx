@@ -1,6 +1,6 @@
+import { ScopedCssBaseline } from '@mui/material';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
-import ScopedCssBaseline from '@material-ui/core/ScopedCssBaseline';
 import { CambiosProvider } from '../context/Context';
 
 /* import GlobalStyles from '../styles/global'; */

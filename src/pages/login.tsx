@@ -1,4 +1,3 @@
-import { Button } from '@material-ui/core';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
@@ -6,6 +5,7 @@ import TextField from '@mui/material/TextField';
 import { useContext, useEffect, useState } from 'react';
 import { CambiosContext } from '../context/Context';
 import { useRouter } from 'next/router';
+import { Button } from '@mui/material';
 
 export default function Login() {
   const [loginData, setLoginData] = useState({ email: '', password: '' });
@@ -96,6 +96,7 @@ export default function Login() {
             value={email}
             name="email"
             onChange={handleChange}
+            /* sx={{ paddingTop: 1 }} */
           />
           <TextField
             id="demo-helper-text-misaligned"
@@ -107,6 +108,7 @@ export default function Login() {
             margin="normal"
             value={password}
             onChange={handleChange}
+            /* sx={{ paddingTop: 1 }} */
           />
         </Box>
         <Button

@@ -1,7 +1,7 @@
-import { Button } from '@material-ui/core';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
+import { Button } from '@mui/material';
 
 export default function Home() {
   return (

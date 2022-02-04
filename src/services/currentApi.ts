@@ -8,9 +8,10 @@ export const getCurrencies = async () => {
   return currencies;
 };
 
-export const getExchangeRates = async () => {
+export const getExchangeRates = async (currency: string) => {
   const response = await fetch('https://economia.awesomeapi.com.br/json/all');
   const json = await response.json();
   /* return response.ok ? Promise.resolve(currencies) : Promise.reject(currencies); */
-  return json;
+  const { name, ask } = await json[currency];
+  return { name, ask };
 };

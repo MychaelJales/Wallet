@@ -14,8 +14,8 @@ export default function Header() {
     state: { email }
   } = useContext(CambiosContext);
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+    <Box sx={{ flexGrow: 1, borderRadius: '10px' }}>
+      <AppBar position="static" sx={{ borderRadius: '5px' }}>
         <Toolbar>
           <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
             {`MJ Wallet `}

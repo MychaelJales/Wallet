@@ -8,6 +8,21 @@ import React, { createContext, FC, useState } from 'react';
 type UserType = {
   email: string;
   currencies: Array<string>;
+  isEditing: boolean;
+  expenses: Array<objectType>;
+  editingExpense: objectType;
+};
+
+type objectType = {
+  id: number;
+  description: string;
+  tag: string;
+  method: string;
+  value: string;
+  currencyConverted: string;
+  exchangeRates: string;
+  convertedValue: string;
+  currencyName: string;
 };
 
 //Tipando as Props do contexto
@@ -20,7 +35,32 @@ type PropsUserContext = {
 const DEFAULT_VALUE = {
   state: {
     email: '',
-    currencies: ['']
+    currencies: [''],
+    isEditing: false,
+    expenses: [
+      {
+        id: 0,
+        description: '',
+        tag: '',
+        method: '',
+        value: '',
+        currencyConverted: '',
+        exchangeRates: '',
+        convertedValue: '',
+        currencyName: ''
+      }
+    ],
+    editingExpense: {
+      id: 0,
+      description: '',
+      tag: '',
+      method: '',
+      value: '',
+      currencyConverted: '',
+      exchangeRates: '',
+      convertedValue: '',
+      currencyName: ''
+    }
   },
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   setState: () => {} //função de inicialização

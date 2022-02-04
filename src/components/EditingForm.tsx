@@ -8,7 +8,7 @@ import { CambiosContext } from '../context/Context';
 import { getCurrencies, getExchangeRates } from '../services/currentApi';
 import { Button, InputAdornment, TextField } from '@mui/material';
 
-export default function Form() {
+export default function EditingForm() {
   const { state, setState } = useContext(CambiosContext);
   const [dataForm, setDataForm] = useState({
     id: 0,
@@ -43,7 +43,7 @@ export default function Form() {
     });
   };
 
-  const onClickBtnAdd = async () => {
+  /* const onClickBtnEdit = async () => {
     const data = await getExchangeRates(dataForm.currency);
     const { name, ask } = data;
     const newValue = Number(ask * Number(dataForm.value)).toFixed(2);
@@ -77,11 +77,33 @@ export default function Form() {
     } else {
       setState({ ...state, expenses: [dataForm] });
     }
-  }, [idForm]);
+  }, [idForm]); */
 
-  useEffect(() => {
-    getCurrencies().then((data) => setState({ ...state, currencies: data }));
-  }, []);
+  /* useEffect(() => {
+    const { editingExpense } = state;
+    const {
+      id,
+      value,
+      description,
+      method,
+      tag,
+      currencyConverted,
+      exchangeRates,
+      convertedValue,
+      currencyName
+    } = editingExpense;
+    setDataForm({
+      id,
+      value,
+      description,
+      method,
+      tag,
+      currencyConverted,
+      exchangeRates,
+      convertedValue,
+      currencyName
+    });
+  }, []); */
   return (
     <Box
       sx={{
@@ -175,9 +197,9 @@ export default function Form() {
         variant="outlined"
         color="primary"
         size="small"
-        onClick={onClickBtnAdd}
+        /* onClick={onClickBtnEdit} */
       >
-        Adicionar Despesa
+        Editar Despesa
       </Button>
     </Box>
   );
