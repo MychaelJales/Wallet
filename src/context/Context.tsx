@@ -87,7 +87,7 @@ export const CambiosProvider: FC = ({ children }) => {
   const [state, setState] = useState(DEFAULT_VALUE.state);
 
   useEffect(() => {
-    const { expenses, totalExpenses } = state;
+    const { expenses } = state;
     let totalValue = 0;
     expenses.forEach((e) => {
       totalValue += Number(e.convertedValue);
