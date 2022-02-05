@@ -1,4 +1,4 @@
-import React, { createContext, FC, useState } from 'react';
+import React, { createContext, FC, useEffect, useState } from 'react';
 
 /* const defaultState = {
   email: ''
@@ -9,9 +9,16 @@ type UserType = {
   email: string;
   currencies: Array<string>;
   isEditing: boolean;
+  totalExpenses: number;
   expenses: Array<objectType>;
   editingExpense: objectType;
 };
+
+interface LooseObject {
+  [key: string]: {
+    [key: string]: string;
+  };
+}
 
 type objectType = {
   id: number;
@@ -23,6 +30,8 @@ type objectType = {
   exchangeRates: string;
   convertedValue: string;
   currencyName: string;
+  currency: string;
+  data: LooseObject;
 };
 
 //Tipando as Props do contexto
@@ -37,6 +46,7 @@ const DEFAULT_VALUE = {
     email: '',
     currencies: [''],
     isEditing: false,
+    totalExpenses: 0,
     expenses: [
       {
         id: 0,
@@ -47,7 +57,9 @@ const DEFAULT_VALUE = {
         currencyConverted: '',
         exchangeRates: '',
         convertedValue: '',
-        currencyName: ''
+        currencyName: '',
+        currency: '',
+        data: {}
       }
     ],
     editingExpense: {
@@ -59,7 +71,9 @@ const DEFAULT_VALUE = {
       currencyConverted: '',
       exchangeRates: '',
       convertedValue: '',
-      currencyName: ''
+      currencyName: '',
+      currency: '',
+      data: {}
     }
   },
   // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -71,6 +85,19 @@ export const CambiosContext = createContext<PropsUserContext>(DEFAULT_VALUE);
 
 export const CambiosProvider: FC = ({ children }) => {
   const [state, setState] = useState(DEFAULT_VALUE.state);
+
+  useEffect(() => {
+    const { expenses, totalExpenses } = state;
+    let totalValue = 0;
+    expenses.forEach((e) => {
+      totalValue += Number(e.convertedValue);
+    });
+    setState({
+      ...state,
+      totalExpenses: Number(totalValue.toFixed(2))
+    });
+  }, [state.expenses]);
+
   return (
     <CambiosContext.Provider
       value={{

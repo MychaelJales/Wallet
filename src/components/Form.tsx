@@ -20,7 +20,8 @@ export default function Form() {
     currencyConverted: '',
     exchangeRates: '',
     convertedValue: '0',
-    currencyName: 'Real'
+    currencyName: 'Real',
+    data: {}
   });
   const [idForm, setIdForm] = useState(0);
 
@@ -45,23 +46,25 @@ export default function Form() {
 
   const onClickBtnAdd = async () => {
     const data = await getExchangeRates(dataForm.currency);
-    const { name, ask } = data;
+    const { name, ask, json } = data;
     const newValue = Number(ask * Number(dataForm.value)).toFixed(2);
-    AttDataForm({ newValue, name, ask });
+    AttDataForm({ newValue, name, ask, json });
   };
   type props = {
     newValue: string;
     name: string;
     ask: string;
+    json: object;
   };
 
-  const AttDataForm = ({ newValue, name, ask }: props) => {
-    console.log({ newValue, name, ask });
+  const AttDataForm = ({ newValue, name, ask, json }: props) => {
+    /* console.log({ newValue, name, ask, json }); */
     setDataForm({
       ...dataForm,
       currencyConverted: name,
       exchangeRates: ask,
       convertedValue: String(newValue),
+      data: json,
       id: idForm
     });
     return AttState();

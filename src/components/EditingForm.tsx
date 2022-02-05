@@ -5,11 +5,11 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import { CambiosContext } from '../context/Context';
-import { getCurrencies, getExchangeRates } from '../services/currentApi';
 import { Button, InputAdornment, TextField } from '@mui/material';
 
 export default function EditingForm() {
   const { state, setState } = useContext(CambiosContext);
+  const [attContext, setAttContext] = useState(false);
   const [dataForm, setDataForm] = useState({
     id: 0,
     value: '0',
@@ -20,10 +20,11 @@ export default function EditingForm() {
     currencyConverted: '',
     exchangeRates: '',
     convertedValue: '0',
-    currencyName: 'Real'
+    currencyName: 'Real',
+    data: {}
   });
-  const [idForm, setIdForm] = useState(0);
 
+  let newExpenses = [];
   const methods = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
   const tags = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
 
@@ -43,10 +44,14 @@ export default function EditingForm() {
     });
   };
 
-  /* const onClickBtnEdit = async () => {
-    const data = await getExchangeRates(dataForm.currency);
-    const { name, ask } = data;
-    const newValue = Number(ask * Number(dataForm.value)).toFixed(2);
+  const onClickBtnEdit = () => {
+    const { data } = state.editingExpense;
+    const { currency } = dataForm;
+    const currencyActual = data[currency];
+    const { name, ask } = currencyActual;
+    const newValue = Number(Number(ask) * Number(dataForm.value)).toFixed(2);
+    console.log({ name, ask, newValue });
+
     AttDataForm({ newValue, name, ask });
   };
   type props = {
@@ -55,31 +60,39 @@ export default function EditingForm() {
     ask: string;
   };
 
+  const attStateContext = () => {
+    newExpenses = state.expenses.map((expense) => {
+      if (expense.id === dataForm.id) {
+        return dataForm;
+      } else {
+        return expense;
+      }
+    });
+    console.log(newExpenses);
+    setState({
+      ...state,
+      expenses: newExpenses,
+      isEditing: false
+    });
+  };
+
   const AttDataForm = ({ newValue, name, ask }: props) => {
-    console.log({ newValue, name, ask });
     setDataForm({
       ...dataForm,
       currencyConverted: name,
       exchangeRates: ask,
-      convertedValue: String(newValue),
-      id: idForm
+      convertedValue: String(newValue)
     });
-    return AttState();
-  };
-
-  const AttState = () => {
-    setIdForm(idForm + 1);
+    return setAttContext(true);
   };
 
   useEffect(() => {
-    if (state.expenses[0].tag) {
-      setState({ ...state, expenses: [...state.expenses, dataForm] });
-    } else {
-      setState({ ...state, expenses: [dataForm] });
+    if (attContext) {
+      attStateContext();
     }
-  }, [idForm]); */
+  }, [attContext]);
 
-  /* useEffect(() => {
+  useEffect(() => {
     const { editingExpense } = state;
     const {
       id,
@@ -90,7 +103,9 @@ export default function EditingForm() {
       currencyConverted,
       exchangeRates,
       convertedValue,
-      currencyName
+      currencyName,
+      currency,
+      data
     } = editingExpense;
     setDataForm({
       id,
@@ -101,9 +116,12 @@ export default function EditingForm() {
       currencyConverted,
       exchangeRates,
       convertedValue,
-      currencyName
+      currencyName,
+      currency,
+      data
     });
-  }, []); */
+  }, []);
+
   return (
     <Box
       sx={{
@@ -197,7 +215,7 @@ export default function EditingForm() {
         variant="outlined"
         color="primary"
         size="small"
-        /* onClick={onClickBtnEdit} */
+        onClick={onClickBtnEdit}
       >
         Editar Despesa
       </Button>

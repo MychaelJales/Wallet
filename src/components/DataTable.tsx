@@ -22,6 +22,22 @@ import { CambiosContext } from '../context/Context';
 export default function DataTable() {
   const { state, setState } = useContext(CambiosContext);
 
+  const defaultExpense = [
+    {
+      id: 0,
+      description: '',
+      tag: '',
+      method: '',
+      value: '',
+      currencyConverted: '',
+      exchangeRates: '',
+      convertedValue: '',
+      currencyName: '',
+      currency: '',
+      data: {}
+    }
+  ];
+
   const columns: GridColDef[] = [
     { field: 'id', headerName: 'ID', width: 50 },
     { field: 'description', headerName: 'Descrição', width: 220 },
@@ -64,32 +80,29 @@ export default function DataTable() {
           const newExpenses = expenses.filter(
             (item) => Number(item.id) !== Number(params.id)
           );
-          setState({
-            ...state,
-            expenses: newExpenses
-          });
+          if (state.expenses.length !== 1) {
+            setState({
+              ...state,
+              expenses: newExpenses
+            });
+          } else {
+            setState({
+              ...state,
+              expenses: defaultExpense
+            });
+          }
         };
 
-        type objectType = {
-          id: number;
-          description: string;
-          tag: string;
-          method: string;
-          value: string;
-          currencyConverted: string;
-          exchangeRates: string;
-          convertedValue: string;
-          currencyName: string;
-        };
-
-        const onClick = () => {
-          /* const { expenses } = state; */
-          /* const editExpenses: objectType | undefined = expenses.find(
+        const onClickEditing = () => {
+          const { expenses } = state;
+          const editExpenses = expenses.find(
             (item) => Number(item.id) === Number(params.id)
-          ); */
+          );
+          console.log(editExpenses);
+
           setState({
             ...state,
-            /* editingExpense: editExpenses, */
+            editingExpense: editExpenses!,
             isEditing: true
           });
         };
@@ -97,7 +110,7 @@ export default function DataTable() {
           <>
             <IconButton
               color="primary"
-              onClick={onClick}
+              onClick={onClickEditing}
               aria-label="delete"
               size="large"
             >

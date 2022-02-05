@@ -13,5 +13,5 @@ export const getExchangeRates = async (currency: string) => {
   const json = await response.json();
   /* return response.ok ? Promise.resolve(currencies) : Promise.reject(currencies); */
   const { name, ask } = await json[currency];
-  return { name, ask };
+  return { name, ask, json };
 };

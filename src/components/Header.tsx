@@ -11,7 +11,7 @@ import { CambiosContext } from '../context/Context';
 
 export default function Header() {
   const {
-    state: { email }
+    state: { email, totalExpenses }
   } = useContext(CambiosContext);
   return (
     <Box sx={{ flexGrow: 1, borderRadius: '10px' }}>
@@ -24,7 +24,7 @@ export default function Header() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             {`Olá, ${email}`}
           </Typography>
-          <Typography variant="h6">{`Total XXX BRL`}</Typography>
+          <Typography variant="h6">{`Total ${totalExpenses} BRL`}</Typography>
         </Toolbar>
       </AppBar>
     </Box>
